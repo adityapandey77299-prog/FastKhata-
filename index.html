@@ -2,236 +2,271 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FastKhata Fixed</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FastKhata - Digital Business Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        :root { --orange-main: #f97316; --orange-deep: #ea580c; --red: #ef4444; --green: #10b981; }
-        body { font-family: 'Segoe UI', sans-serif; background: #fff7ed; margin: 0; padding-bottom: 50px; color: #431407; }
-        
-        .top-section { background: linear-gradient(135deg, #fb923c, #ea580c); color: white; padding: 40px 20px 60px; text-align: center; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; }
-        .total-card { background: white; margin: -40px 20px 20px; padding: 20px; border-radius: 25px; display: flex; justify-content: space-around; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        
-        .container { padding: 15px; max-width: 500px; margin: auto; }
-        .search-box { width: 100%; padding: 15px 25px; border-radius: 50px; border: 2px solid #fdba74; margin-bottom: 20px; outline: none; box-sizing: border-box; font-size: 16px; }
+        :root {
+            --primary: linear-gradient(135deg, #FF8800 0%, #FF4400 100%);
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --green: #00c853;
+            --red: #ff3d00;
+            --bg: #fff5eb;
+        }
 
-        .card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .clickable-name { cursor: pointer; color: var(--orange-deep); font-weight: bold; font-size: 18px; }
-        
-        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
-        .btn { border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-        .btn-baki { background: #fff1f2; color: var(--red); border: 1px solid #fecdd3; }
-        .btn-jama { background: #f0fdf4; color: var(--green); border: 1px solid #bbf7d0; }
-        .btn-wa { background: #25d366; color: white; width: 100%; padding: 12px; border-radius: 10px; border:none; font-weight:700; }
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        /* Profile Modal */
-        .profile-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff7ed; z-index: 3000; display: none; flex-direction: column; }
-        .p-header { background: var(--orange-deep); color: white; padding: 25px; text-align: center; position: relative; }
-        .ledger { flex: 1; overflow-y: auto; padding: 20px; background: white; border-radius: 30px 30px 0 0; }
+        body { 
+            background: var(--bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(255, 136, 0, 0.2) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(255, 68, 0, 0.2) 0px, transparent 50%);
+            margin: 0; padding: 0; min-height: 100vh;
+        }
 
-        /* Input Modal */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 4000; }
-        .modal-content { background: white; width: 85%; padding: 25px; border-radius: 25px; text-align: center; }
+        /* Modern Glossy Header */
+        .header {
+            background: var(--primary);
+            padding: 60px 20px 90px 20px;
+            border-radius: 0 0 50px 50px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 15px 35px rgba(255, 68, 0, 0.25);
+        }
+
+        .header h1 { margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -1.5px; }
+        .header p { margin: 8px 0 0 0; opacity: 0.85; font-size: 15px; font-weight: 600; }
+
+        /* Stats Section with Glass Effect */
+        .stats-container {
+            display: flex; gap: 15px;
+            margin: -60px 20px 25px 20px;
+        }
+
+        .stat-card {
+            flex: 1;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 22px 10px;
+            border-radius: 28px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+        }
+
+        .stat-card h3 { margin: 0; font-size: 10px; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; }
+        .stat-card p { margin: 10px 0 0 0; font-size: 20px; font-weight: 800; line-height: 1; }
+
+        /* Main UI Container */
+        .container { padding: 0 20px; }
+
+        .search-glass {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            padding: 14px 22px;
+            border-radius: 50px;
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 22px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+        }
+
+        .search-glass input {
+            border: none; background: transparent; outline: none;
+            width: 100%; font-size: 16px; color: #222; font-weight: 600;
+        }
+
+        .form-glass {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1.5px dashed var(--glass-border);
+            padding: 22px; border-radius: 30px; margin-bottom: 25px;
+        }
+
+        .form-glass input {
+            width: 100%; padding: 15px; margin-bottom: 12px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px; font-size: 14px; outline: none;
+            font-weight: 600; transition: 0.3s;
+        }
         
-        .red { color: var(--red); } .green { color: var(--green); }
+        .form-glass input:focus { border-color: #FF5500; background: white; }
+
+        .btn-premium {
+            background: var(--primary);
+            color: white; border: none; width: 100%; padding: 16px;
+            border-radius: 18px; font-weight: 800; font-size: 16px;
+            box-shadow: 0 8px 25px rgba(255, 68, 0, 0.35);
+            cursor: pointer; transition: 0.3s;
+        }
+
+        .btn-premium:active { transform: scale(0.97); }
+
+        /* Customer List Glass Cards */
+        .customer-card {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            padding: 22px; border-radius: 30px;
+            margin-bottom: 18px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.04);
+            transition: 0.3s;
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .name-area h2 { margin: 0; font-size: 20px; font-weight: 800; color: #111; letter-spacing: -0.5px; }
+        .name-area span { font-size: 13px; color: #777; font-weight: 600; display: block; margin-top: 4px; }
+
+        .amount-area { text-align: right; }
+        .baki-val { font-size: 24px; font-weight: 800; color: var(--red); display: block; }
+        .jama-val { font-size: 14px; font-weight: 700; color: var(--green); margin-top: 2px; }
+
+        .action-row { display: flex; gap: 12px; }
+        .act-btn {
+            flex: 1; padding: 14px; border-radius: 15px; border: none;
+            font-weight: 700; font-size: 15px; cursor: pointer;
+            transition: 0.2s;
+        }
+        .act-red { background: #fee7e7; color: var(--red); }
+        .act-green { background: #e7fee7; color: var(--green); }
+
+        .whatsapp-btn {
+            background: #25D366; color: white;
+            width: 100%; margin-top: 12px; padding: 14px;
+            border-radius: 15px; border: none; font-weight: 800;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            text-decoration: none; font-size: 15px;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.2);
+        }
+
+        .delete-ico { color: #ccc; font-size: 16px; cursor: pointer; margin-left: 8px; transition: 0.3s; }
+        .delete-ico:hover { color: var(--red); }
+
     </style>
 </head>
 <body>
 
-<!-- Grahak Profile Screen -->
-<div id="profileModal" class="profile-modal">
-    <div class="p-header">
-        <span onclick="closeProfile()" style="position:absolute; left:20px; font-size:24px;">←</span>
-        <h2 id="pName">Grahak Name</h2>
-        <p id="pPhone">Number</p>
-    </div>
-    <div style="display:flex; justify-content:space-around; padding:20px;">
-        <div class="card" style="flex:1; margin:5px; text-align:center;">
-            <small>BAKI</small><div id="pTotalBaki" class="red" style="font-size:20px; font-weight:900;">₹0</div>
-        </div>
-        <div class="card" style="flex:1; margin:5px; text-align:center;">
-            <small>JAMA</small><div id="pTotalJama" class="green" style="font-size:20px; font-weight:900;">₹0</div>
-        </div>
-    </div>
-    <div class="ledger">
-        <h4>Pura Hisab</h4>
-        <div id="pHistoryList"></div>
-    </div>
+<div class="header">
+    <h1>FastKhata</h1>
+    <p>Apka Digital Business Manager</p>
 </div>
 
-<!-- Input Modal -->
-<div id="customModal" class="modal-overlay">
-    <div class="modal-content">
-        <h3 id="modalTitle">Kitna Amount?</h3>
-        <input type="number" id="modalInput" style="width:100%; padding:15px; font-size:20px; border-radius:10px; border:1px solid #ccc; margin-bottom:10px;" placeholder="₹ Amount">
-        <input type="text" id="modalNote" style="width:100%; padding:12px; border-radius:10px; border:1px solid #ccc; margin-bottom:20px;" placeholder="Details (Jeans, Shirt...)">
-        <div style="display:flex; gap:10px;">
-            <button onclick="closeModal()" style="flex:1; padding:12px; border:none; background:#eee; border-radius:10px;">Cancel</button>
-            <button id="confirmBtn" style="flex:1; padding:12px; background:var(--orange-main); color:white; border-radius:10px; font-weight:bold;">OK</button>
-        </div>
+<div class="stats-container">
+    <div class="stat-card">
+        <h3>KUL BAKI</h3>
+        <p style="color: var(--red);">₹ <span id="totalBaki">0</span></p>
     </div>
-</div>
-
-<div class="top-section">
-    <h1 style="margin:0;">FastKhata</h1>
-    <p>Apka Digital Khata</p>
-</div>
-
-<div class="total-card">
-    <div style="text-align:center;"><span>KUL BAKI</span><div class="red" id="totalBaki" style="font-size:22px; font-weight:900;">₹0</div></div>
-    <div style="text-align:center;"><span>KUL JAMA</span><div class="green" id="totalJama" style="font-size:22px; font-weight:900;">₹0</div></div>
+    <div class="stat-card">
+        <h3>KUL JAMA</h3>
+        <p style="color: var(--green);">₹ <span id="totalJama">0</span></p>
+    </div>
 </div>
 
 <div class="container">
-    <input type="text" id="searchInput" class="search-box" placeholder="🔍 Search Grahak..." oninput="renderCustomers()">
-    
-    <!-- Add Grahak Card -->
-    <div class="card" style="border: 2px dashed #fdba74; background: #fffaf5;">
-        <input type="text" id="custName" style="width:100%; padding:12px; margin-bottom:10px; border-radius:10px; border:1px solid #fed7aa; box-sizing:border-box;" placeholder="Grahak ka Naam">
-        <input type="number" id="custPhone" style="width:100%; padding:12px; margin-bottom:15px; border-radius:10px; border:1px solid #fed7aa; box-sizing:border-box;" placeholder="WhatsApp Number">
-        <button onclick="addCustomer()" style="width:100%; background:var(--orange-main); color:white; border:none; padding:15px; border-radius:12px; font-weight:bold; font-size:16px;">+ Save Grahak</button>
+    <div class="search-glass">
+        <i class="fa fa-search" style="color: #FF5500;"></i>
+        <input type="text" id="searchInp" placeholder="Grahak ka naam dhoondhein..." oninput="render()">
     </div>
 
-    <div id="customerList"></div>
+    <div class="form-glass">
+        <input type="text" id="cusName" placeholder="Grahak ka Poora Naam">
+        <input type="number" id="cusPhone" placeholder="WhatsApp Number">
+        <button class="btn-premium" onclick="add()">+ Save Naya Grahak</button>
+    </div>
+
+    <div id="list"></div>
 </div>
 
 <script>
-    // Data Loading with Protection
-    let customers = [];
-    try {
-        const saved = localStorage.getItem('fastKhata_final_v6');
-        if (saved) customers = JSON.parse(saved);
-    } catch(e) { customers = []; }
+    let data = JSON.parse(localStorage.getItem('fastkhata_premium_db')) || [];
 
-    function saveData() {
-        localStorage.setItem('fastKhata_final_v6', JSON.stringify(customers));
-        renderCustomers();
+    function add() {
+        const n = document.getElementById('cusName').value;
+        const p = document.getElementById('cusPhone').value;
+        if(!n) return alert("Naam zaroori hai!");
+        data.push({ id: Date.now(), name: n, phone: p, baki: 0, jama: 0 });
+        save();
+        document.getElementById('cusName').value = '';
+        document.getElementById('cusPhone').value = '';
     }
 
-    // Add Customer Function
-    function addCustomer() {
-        const nameInput = document.getElementById('custName');
-        const phoneInput = document.getElementById('custPhone');
-        
-        const name = nameInput.value.trim();
-        const phone = phoneInput.value.trim();
+    function update(id, type) {
+        const val = parseFloat(prompt("Kripya Amount (₹) daalein:"));
+        if(isNaN(val) || val <= 0) return;
+        const c = data.find(i => i.id === id);
+        if(type === 'baki') c.baki += val;
+        else c.jama += val;
+        save();
+    }
 
-        if (name === "") {
-            alert("Kripya Grahak ka Naam bharein!");
-            return;
+    function remove(id) {
+        if(confirm("Kya aap is grahak ko hatana chahte hain?")) {
+            data = data.filter(i => i.id !== id);
+            save();
         }
-
-        const newCustomer = {
-            id: Date.now(),
-            name: name,
-            phone: phone,
-            balance: 0,
-            history: []
-        };
-
-        customers.push(newCustomer);
-        nameInput.value = "";
-        phoneInput.value = "";
-        saveData();
     }
 
-    // Modal & Transaction Logic
-    let currentId = null, currentType = '';
-    function openModal(id, type) {
-        currentId = id; currentType = type;
-        document.getElementById('modalTitle').innerText = type==='baki'?'Kitna BAKI?':'Kitna JAMA?';
-        document.getElementById('modalInput').value = '';
-        document.getElementById('modalNote').value = '';
-        document.getElementById('customModal').style.display='flex';
+    function save() {
+        localStorage.setItem('fastkhata_premium_db', JSON.stringify(data));
+        render();
     }
-    function closeModal() { document.getElementById('customModal').style.display='none'; }
 
-    document.getElementById('confirmBtn').onclick = function() {
-        const amt = parseFloat(document.getElementById('modalInput').value);
-        const note = document.getElementById('modalNote').value.trim();
-        if(!amt) return alert("Amount bharein!");
-
-        const c = customers.find(cust => cust.id === currentId);
-        const date = new Date().toLocaleString('hi-IN', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'});
-
-        if(currentType === 'baki') {
-            c.balance += amt;
-            c.history.unshift({type:'BAKI', amount:amt, date, note});
-        } else {
-            c.balance -= amt;
-            c.history.unshift({type:'JAMA', amount:amt, date, note});
-        }
-        closeModal(); saveData();
-        if(document.getElementById('profileModal').style.display==='flex') openProfile(currentId);
-    };
-
-    // Profile Display
-    function openProfile(id) {
-        const c = customers.find(cust => cust.id === id);
-        document.getElementById('pName').innerText = c.name;
-        document.getElementById('pPhone').innerText = "📞 " + (c.phone || "N/A");
+    function render() {
+        const query = document.getElementById('searchInp').value.toLowerCase();
+        const box = document.getElementById('list');
+        box.innerHTML = '';
         
-        let totalJ = 0;
-        c.history.forEach(h => { if(h.type==='JAMA') totalJ += h.amount; });
-        
-        document.getElementById('pTotalBaki').innerText = "₹" + Math.abs(c.balance);
-        document.getElementById('pTotalJama').innerText = "₹" + totalJ;
-        
-        document.getElementById('pHistoryList').innerHTML = c.history.map(h => `
-            <div style="border-bottom:1px solid #eee; padding:10px 0;">
-                <div style="display:flex; justify-content:space-between;">
-                    <small>${h.date}</small>
-                    <b class="${h.type==='BAKI'?'red':'green'}">${h.type}: ₹${h.amount}</b>
-                </div>
-                <div style="font-size:14px; margin-top:3px;">${h.note || ''}</div>
-            </div>
-        `).join('') || "No History";
-        document.getElementById('profileModal').style.display='flex';
-    }
-    function closeProfile() { document.getElementById('profileModal').style.display='none'; }
+        let totalBaki = 0;
+        let totalJama = 0;
 
-    // List Rendering
-    function renderCustomers() {
-        const listDiv = document.getElementById('customerList');
-        const search = document.getElementById('searchInput').value.toLowerCase();
-        listDiv.innerHTML = "";
-        let tBaki = 0, tJama = 0;
+        // Har transaction ke baad total recalculate hoga
+        data.forEach(c => {
+            totalBaki += parseFloat(c.baki || 0);
+            totalJama += parseFloat(c.jama || 0);
 
-        customers.forEach(c => {
-            if(c.balance > 0) tBaki += c.balance;
-            else tJama += Math.abs(c.balance);
-
-            if(!c.name.toLowerCase().includes(search)) return;
-
-            let indJ = 0;
-            c.history.forEach(h => { if(h.type==='JAMA') indJ += h.amount; });
-
-            const div = document.createElement('div');
-            div.className = "card";
-            div.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <div onclick="openProfile(${c.id})" class="clickable-name">${c.name}</div>
-                    <div style="text-align:right;">
-                        <div class="red" style="font-size:18px; font-weight:900;">₹${Math.abs(c.balance)}</div>
-                        <small style="color:var(--green); font-weight:bold;">Jama: ₹${indJ}</small>
+            if(c.name.toLowerCase().includes(query)) {
+                const card = document.createElement('div');
+                card.className = 'customer-card';
+                card.innerHTML = `
+                    <div class="card-top">
+                        <div class="name-area">
+                            <h2>${c.name} <i class="fa fa-trash-alt delete-ico" onclick="remove(${c.id})"></i></h2>
+                            <span><i class="fa fa-phone-alt"></i> +91 ${c.phone || '----------'}</span>
+                        </div>
+                        <div class="amount-area">
+                            <span class="baki-val">₹${c.baki}</span>
+                            <span class="jama-val">Jama: ₹${c.jama}</span>
+                        </div>
                     </div>
-                </div>
-                <div class="btn-group">
-                    <button class="btn btn-baki" onclick="openModal(${c.id}, 'baki')">− BAKI</button>
-                    <button class="btn btn-jama" onclick="openModal(${c.id}, 'jama')">+ JAMA</button>
-                </div>
-                <button class="btn-wa" onclick="window.open('https://wa.me/91${c.phone}?text=Namaste, Aapka balance ₹${Math.abs(c.balance)} BAKI hai.')">📱 WhatsApp</button>
-                <div style="text-align:right; margin-top:10px;">
-                    <button onclick="if(confirm('Delete?')){customers=customers.filter(cust=>cust.id!==${c.id});saveData();}" style="color:#ccc; border:none; background:none; font-size:10px;">Delete</button>
-                </div>
-            `;
-            listDiv.appendChild(div);
+                    <div class="action-row">
+                        <button class="act-btn act-red" onclick="update(${c.id}, 'baki')">- BAKI</button>
+                        <button class="act-btn act-green" onclick="update(${c.id}, 'jama')">+ JAMA</button>
+                    </div>
+                    <a class="whatsapp-btn" href="https://wa.me/91${c.phone}?text=*FastKhata Update*%0A--------------------------%0ANamaste ${c.name},%0AAapka khata update ho gaya hai:%0A*Baki (Pending):* ₹${c.baki}%0A*Jama (Paid):* ₹${c.jama}%0A--------------------------%0ADhanyawad!" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp Reminder
+                    </a>
+                `;
+                box.appendChild(card);
+            }
         });
-        document.getElementById('totalBaki').innerText = "₹" + tBaki;
-        document.getElementById('totalJama').innerText = "₹" + tJama;
+
+        document.getElementById('totalBaki').innerText = totalBaki.toLocaleString('en-IN');
+        document.getElementById('totalJama').innerText = totalJama.toLocaleString('en-IN');
     }
 
-    // Start App
-    renderCustomers();
+    window.onload = render;
 </script>
+
 </body>
 </html>
