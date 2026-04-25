@@ -3,31 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FastKhata - Digital Business Manager</title>
+    <title>FastKhata - Premium Glass Khata</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
             --primary: linear-gradient(135deg, #FF8800 0%, #FF4400 100%);
-            --glass: rgba(255, 255, 255, 0.7);
+            --glass: rgba(255, 255, 255, 0.65);
             --glass-border: rgba(255, 255, 255, 0.5);
             --green: #00c853;
             --red: #ff3d00;
             --bg: #fff5eb;
         }
 
-        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body { 
             background: var(--bg);
             background-image: 
                 radial-gradient(at 0% 0%, rgba(255, 136, 0, 0.2) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(255, 68, 0, 0.2) 0px, transparent 50%);
-            margin: 0; padding: 0; min-height: 100vh;
+            margin: 0; padding: 0; min-height: 100vh; overflow-x: hidden;
         }
 
-        /* Modern Glossy Header */
+        /* Header */
         .header {
             background: var(--primary);
             padding: 60px 20px 90px 20px;
@@ -37,10 +37,10 @@
             box-shadow: 0 15px 35px rgba(255, 68, 0, 0.25);
         }
 
-        .header h1 { margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -1.5px; }
-        .header p { margin: 8px 0 0 0; opacity: 0.85; font-size: 15px; font-weight: 600; }
+        .header h1 { margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -1.5px; }
+        .header p { margin: 8px 0 0 0; opacity: 0.9; font-size: 14px; font-weight: 600; }
 
-        /* Stats Section with Glass Effect */
+        /* Stats Cards */
         .stats-container {
             display: flex; gap: 15px;
             margin: -60px 20px 25px 20px;
@@ -49,8 +49,8 @@
         .stat-card {
             flex: 1;
             background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border);
             padding: 22px 10px;
             border-radius: 28px;
@@ -58,15 +58,15 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
         }
 
-        .stat-card h3 { margin: 0; font-size: 10px; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; }
-        .stat-card p { margin: 10px 0 0 0; font-size: 20px; font-weight: 800; line-height: 1; }
+        .stat-card h3 { margin: 0; font-size: 10px; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-card p { margin: 8px 0 0 0; font-size: 20px; font-weight: 800; }
 
-        /* Main UI Container */
+        /* UI Container */
         .container { padding: 0 20px; }
 
         .search-glass {
             background: var(--glass);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
             padding: 14px 22px;
             border-radius: 50px;
@@ -75,10 +75,7 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.04);
         }
 
-        .search-glass input {
-            border: none; background: transparent; outline: none;
-            width: 100%; font-size: 16px; color: #222; font-weight: 600;
-        }
+        .search-glass input { border: none; background: transparent; outline: none; width: 100%; font-size: 16px; font-weight: 600; }
 
         .form-glass {
             background: rgba(255, 255, 255, 0.4);
@@ -91,67 +88,77 @@
             background: var(--glass);
             border: 1px solid var(--glass-border);
             border-radius: 18px; font-size: 14px; outline: none;
-            font-weight: 600; transition: 0.3s;
+            font-weight: 600;
         }
-        
-        .form-glass input:focus { border-color: #FF5500; background: white; }
 
         .btn-premium {
-            background: var(--primary);
-            color: white; border: none; width: 100%; padding: 16px;
+            background: var(--primary); color: white; border: none; width: 100%; padding: 16px;
             border-radius: 18px; font-weight: 800; font-size: 16px;
-            box-shadow: 0 8px 25px rgba(255, 68, 0, 0.35);
-            cursor: pointer; transition: 0.3s;
+            box-shadow: 0 8px 25px rgba(255, 68, 0, 0.3); cursor: pointer;
         }
 
-        .btn-premium:active { transform: scale(0.97); }
-
-        /* Customer List Glass Cards */
+        /* Customer Cards */
         .customer-card {
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            background: var(--glass); backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border);
-            padding: 22px; border-radius: 30px;
-            margin-bottom: 18px;
+            padding: 20px; border-radius: 30px; margin-bottom: 15px;
             box-shadow: 0 12px 30px rgba(0,0,0,0.04);
-            transition: 0.3s;
-            animation: slideUp 0.5s ease forwards;
+            animation: slideUp 0.4s ease forwards;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-        .name-area h2 { margin: 0; font-size: 20px; font-weight: 800; color: #111; letter-spacing: -0.5px; }
-        .name-area span { font-size: 13px; color: #777; font-weight: 600; display: block; margin-top: 4px; }
+        .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .name-area h2 { margin: 0; font-size: 19px; font-weight: 800; color: #111; }
+        .name-area span { font-size: 12px; color: #777; font-weight: 600; }
+        .last-item { font-size: 11px; color: #FF4400; font-weight: 700; margin-top: 4px; display: block; font-style: italic;}
 
         .amount-area { text-align: right; }
-        .baki-val { font-size: 24px; font-weight: 800; color: var(--red); display: block; }
-        .jama-val { font-size: 14px; font-weight: 700; color: var(--green); margin-top: 2px; }
+        .baki-val { font-size: 22px; font-weight: 800; color: var(--red); }
+        .jama-val { font-size: 13px; font-weight: 700; color: var(--green); display: block; }
 
-        .action-row { display: flex; gap: 12px; }
-        .act-btn {
-            flex: 1; padding: 14px; border-radius: 15px; border: none;
-            font-weight: 700; font-size: 15px; cursor: pointer;
-            transition: 0.2s;
-        }
-        .act-red { background: #fee7e7; color: var(--red); }
-        .act-green { background: #e7fee7; color: var(--green); }
+        .action-row { display: flex; gap: 10px; }
+        .act-btn { flex: 1; padding: 14px; border-radius: 15px; border: none; font-weight: 800; font-size: 14px; cursor: pointer; }
+        .act-red { background: #fee; color: var(--red); }
+        .act-green { background: #efe; color: var(--green); }
 
         .whatsapp-btn {
-            background: #25D366; color: white;
-            width: 100%; margin-top: 12px; padding: 14px;
-            border-radius: 15px; border: none; font-weight: 800;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            text-decoration: none; font-size: 15px;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.2);
+            background: #25D366; color: white; width: 100%; margin-top: 10px; padding: 14px;
+            border-radius: 15px; border: none; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 14px;
         }
 
-        .delete-ico { color: #ccc; font-size: 16px; cursor: pointer; margin-left: 8px; transition: 0.3s; }
-        .delete-ico:hover { color: var(--red); }
+        /* CUSTOM GLASS MODAL */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px);
+            display: none; align-items: center; justify-content: center; z-index: 9999;
+            padding: 20px;
+        }
+
+        .glass-modal {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 30px; border-radius: 35px; width: 100%; max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            text-align: center; animation: modalIn 0.3s ease-out;
+        }
+
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+        .glass-modal h2 { margin: 0 0 20px 0; font-size: 20px; font-weight: 800; color: #333; }
+        .glass-modal input {
+            width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 15px;
+            border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.5);
+            font-size: 16px; font-weight: 700; outline: none;
+        }
+
+        .modal-btns { display: flex; gap: 10px; }
+        .m-btn { flex: 1; padding: 15px; border-radius: 15px; border: none; font-weight: 800; font-size: 15px; cursor: pointer; }
+        .m-confirm { background: var(--primary); color: white; }
+        .m-cancel { background: #eee; color: #555; }
+
+        .delete-ico { color: #ddd; font-size: 14px; cursor: pointer; margin-left: 5px; }
 
     </style>
 </head>
@@ -159,7 +166,7 @@
 
 <div class="header">
     <h1>FastKhata</h1>
-    <p>Apka Digital Business Manager</p>
+    <p>Gopalganj ka Digital Business Manager</p>
 </div>
 
 <div class="stats-container">
@@ -188,37 +195,77 @@
     <div id="list"></div>
 </div>
 
+<!-- GLASS MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="glass-modal">
+        <h2 id="modalTitle">Transaction</h2>
+        <input type="number" id="modalAmt" placeholder="₹ Amount daalein">
+        <input type="text" id="modalItem" placeholder="Kis liye? (e.g. Doodh, Repairing)">
+        <div class="modal-btns">
+            <button class="m-btn m-cancel" onclick="closeModal()">Cancel</button>
+            <button class="m-btn m-confirm" onclick="confirmTrans()">Confirm</button>
+        </div>
+    </div>
+</div>
+
 <script>
-    let data = JSON.parse(localStorage.getItem('fastkhata_premium_db')) || [];
+    let data = JSON.parse(localStorage.getItem('fastkhata_v3_db')) || [];
+    let currentCusId = null;
+    let currentType = null;
 
     function add() {
         const n = document.getElementById('cusName').value;
         const p = document.getElementById('cusPhone').value;
         if(!n) return alert("Naam zaroori hai!");
-        data.push({ id: Date.now(), name: n, phone: p, baki: 0, jama: 0 });
+        data.push({ id: Date.now(), name: n, phone: p, baki: 0, jama: 0, lastItem: '' });
         save();
         document.getElementById('cusName').value = '';
         document.getElementById('cusPhone').value = '';
     }
 
-    function update(id, type) {
-        const val = parseFloat(prompt("Kripya Amount (₹) daalein:"));
-        if(isNaN(val) || val <= 0) return;
+    // Modal Control Functions
+    function openModal(id, type) {
+        currentCusId = id;
+        currentType = type;
         const c = data.find(i => i.id === id);
-        if(type === 'baki') c.baki += val;
-        else c.jama += val;
+        document.getElementById('modalTitle').innerText = (type === 'baki' ? 'Add Udhaar' : 'Add Jama') + " - " + c.name;
+        document.getElementById('modalOverlay').style.display = 'flex';
+        document.getElementById('modalAmt').focus();
+    }
+
+    function closeModal() {
+        document.getElementById('modalOverlay').style.display = 'none';
+        document.getElementById('modalAmt').value = '';
+        document.getElementById('modalItem').value = '';
+    }
+
+    function confirmTrans() {
+        const amt = parseFloat(document.getElementById('modalAmt').value);
+        const item = document.getElementById('modalItem').value;
+        
+        if(!amt || amt <= 0) return alert("Sahi amount daalein!");
+        
+        const c = data.find(i => i.id === currentCusId);
+        if(currentType === 'baki') {
+            c.baki += amt;
+        } else {
+            c.jama += amt;
+        }
+        c.lastItem = item ? item : (currentType === 'baki' ? 'Udhaar' : 'Jama');
+        
+        closeModal();
         save();
     }
 
     function remove(id) {
-        if(confirm("Kya aap is grahak ko hatana chahte hain?")) {
+        if(confirm("Grahak ko delete karein?")) {
             data = data.filter(i => i.id !== id);
             save();
         }
     }
 
     function save() {
-        localStorage.setItem('fastkhata_premium_db', JSON.stringify(data));
+        localStorage.setItem('fastkhata_v3_db', JSON.stringify(data));
         render();
     }
 
@@ -230,7 +277,6 @@
         let totalBaki = 0;
         let totalJama = 0;
 
-        // Har transaction ke baad total recalculate hoga
         data.forEach(c => {
             totalBaki += parseFloat(c.baki || 0);
             totalJama += parseFloat(c.jama || 0);
@@ -242,7 +288,8 @@
                     <div class="card-top">
                         <div class="name-area">
                             <h2>${c.name} <i class="fa fa-trash-alt delete-ico" onclick="remove(${c.id})"></i></h2>
-                            <span><i class="fa fa-phone-alt"></i> +91 ${c.phone || '----------'}</span>
+                            <span>+91 ${c.phone || '----------'}</span>
+                            ${c.lastItem ? `<span class="last-item">Last: ${c.lastItem}</span>` : ''}
                         </div>
                         <div class="amount-area">
                             <span class="baki-val">₹${c.baki}</span>
@@ -250,19 +297,19 @@
                         </div>
                     </div>
                     <div class="action-row">
-                        <button class="act-btn act-red" onclick="update(${c.id}, 'baki')">- BAKI</button>
-                        <button class="act-btn act-green" onclick="update(${c.id}, 'jama')">+ JAMA</button>
+                        <button class="act-btn act-red" onclick="openModal(${c.id}, 'baki')">- BAKI</button>
+                        <button class="act-btn act-green" onclick="openModal(${c.id}, 'jama')">+ JAMA</button>
                     </div>
-                    <a class="whatsapp-btn" href="https://wa.me/91${c.phone}?text=*FastKhata Update*%0A--------------------------%0ANamaste ${c.name},%0AAapka khata update ho gaya hai:%0A*Baki (Pending):* ₹${c.baki}%0A*Jama (Paid):* ₹${c.jama}%0A--------------------------%0ADhanyawad!" target="_blank">
-                        <i class="fab fa-whatsapp"></i> WhatsApp Reminder
+                    <a class="whatsapp-btn" href="https://wa.me/91${c.phone}?text=*FastKhata*%0ANamaste ${c.name}, aapke khate ka update:%0A*Baki (Udhaar):* ₹${c.baki}%0A*Jama:* ₹${c.jama}%0A*Last Item:* ${c.lastItem}%0ADhanyawad!" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp Remind
                     </a>
                 `;
                 box.appendChild(card);
             }
         });
 
-        document.getElementById('totalBaki').innerText = totalBaki.toLocaleString('en-IN');
-        document.getElementById('totalJama').innerText = totalJama.toLocaleString('en-IN');
+        document.getElementById('totalBaki').innerText = totalBaki.toLocaleString();
+        document.getElementById('totalJama').innerText = totalJama.toLocaleString();
     }
 
     window.onload = render;
