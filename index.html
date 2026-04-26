@@ -3,247 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FastKhata - Kul Jama Fixed</title>
+    <title>FastKhata Cloud Pro</title>
+    <!-- Premium Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
     <style>
-        :root { 
-            --orange-main: #f97316; 
-            --orange-deep: #ea580c;
-            --red: #ef4444; 
-            --green: #10b981;
-            --font-main: 'Poppins', sans-serif;
-        }
+        :root { --orange: #f97316; --deep: #ea580c; --red: #ef4444; --green: #10b981; }
+        body { font-family: 'Poppins', sans-serif; background: #fff7ed; margin: 0; padding-bottom: 50px; color: #1e293b; overflow-x: hidden; }
         
-        body { 
-            font-family: var(--font-main); 
-            background: #fff7ed; 
-            margin: 0; padding-bottom: 50px; color: #1e293b;
-        }
+        /* Auth/Login Screen */
+        #authSection { position: fixed; inset: 0; background: white; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 25px; }
+        .input-field { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1.5px solid #fed7aa; box-sizing: border-box; font-family: inherit; font-size: 16px; outline: none; }
+        .btn-main { background: var(--orange); color: white; border: none; padding: 16px; border-radius: 15px; width: 100%; font-weight: 800; cursor: pointer; font-size: 16px; box-shadow: 0 5px 15px rgba(234, 88, 12, 0.3); }
 
-        .top-section { 
-            background: linear-gradient(135deg, #fb923c, #ea580c); 
-            color: white; padding: 40px 20px 60px; text-align: center; 
-            border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
-        }
-        .top-section h1 { font-weight: 800; font-size: 26px; margin: 0; }
-
-        .total-card { 
-            background: white; margin: -40px 20px 20px; padding: 22px; 
-            border-radius: 25px; display: flex; justify-content: space-around; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-        .total-item span { font-size: 11px; font-weight: 600; color: #94a3b8; text-transform: uppercase; }
-        .total-item div { font-size: 22px; font-weight: 800; }
-
-        .container { padding: 15px; max-width: 500px; margin: auto; }
-
-        .search-box { 
-            width: 100%; padding: 16px 25px; border-radius: 50px; 
-            border: 2px solid #fdba74; margin-bottom: 25px; outline: none; 
-            box-sizing: border-box; font-size: 16px; font-family: var(--font-main);
-            background: white;
-        }
-
-        .card { 
-            background: white; border-radius: 25px; padding: 20px; 
-            margin-bottom: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.04);
-        }
+        /* Main App Header */
+        .header { background: linear-gradient(135deg, #fb923c, #ea580c); color: white; padding: 40px 20px 60px; text-align: center; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; }
+        .total-card { background: white; margin: -40px 20px 20px; padding: 22px; border-radius: 25px; display: flex; justify-content: space-around; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         
-        .cust-name { cursor: pointer; font-size: 19px; font-weight: 600; color: #1e293b; }
-        .bal-amt { font-size: 24px; font-weight: 800; }
-        .jama-tag { color: var(--green); font-size: 12px; font-weight: 600; margin-top: 5px; display: block; }
-
-        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px 0; }
-        .btn { border: none; padding: 14px; border-radius: 15px; font-weight: 600; cursor: pointer; font-family: var(--font-main); font-size: 14px; }
-        .btn-baki { background: #fff1f2; color: var(--red); border: 1.5px solid #fecdd3; }
-        .btn-jama { background: #f0fdf4; color: var(--green); border: 1.5px solid #bbf7d0; }
-        
-        .btn-wa { 
-            background: #22c55e; color: white; width: 100%; padding: 15px; 
-            border-radius: 18px; border:none; font-weight: 600; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
+        /* Grahak Cards */
+        .card { background: white; border-radius: 25px; padding: 20px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); border: 1px solid #fff; }
+        .clickable-name { cursor: pointer; color: var(--deep); font-weight: 600; font-size: 19px; }
+        .jama-badge { color: var(--green); font-size: 11px; font-weight: 600; background: #f0fdf4; padding: 2px 10px; border-radius: 50px; }
 
         /* Ledger Modal */
-        .history-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #fff; z-index: 3000; display: none;
-            flex-direction: column; animation: slideUp 0.3s ease-out;
-        }
+        .p-modal { position: fixed; inset: 0; background: #fff7ed; z-index: 5000; display: none; flex-direction: column; animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        
-        .h-header { background: var(--orange-deep); color: white; padding: 30px 25px; text-align: center; position: relative; }
-        .h-list { flex: 1; overflow-y: auto; padding: 25px; }
+        .p-header { background: var(--orange); color: white; padding: 30px 20px; text-align: center; position: relative; }
+        .ledger { flex: 1; overflow-y: auto; background: white; border-top-left-radius: 35px; border-top-right-radius: 35px; padding: 20px; }
 
-        /* Input Popups */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 4000; }
+        /* Pop-up Overlay */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 6000; }
         .modal-content { background: white; width: 85%; padding: 30px; border-radius: 30px; text-align: center; }
-        .input-field { width: 100%; padding: 14px; margin-bottom: 10px; border-radius: 12px; border: 1.5px solid #fed7aa; outline: none; box-sizing: border-box; font-family: var(--font-main); font-size: 16px; }
 
         .red { color: var(--red); } .green { color: var(--green); }
+        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+        .mini-btn { border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; font-family: inherit; }
     </style>
 </head>
 <body>
 
-<!-- History Ledger -->
-<div id="historyModal" class="history-modal">
-    <div class="h-header">
-        <span onclick="closeHistory()" style="position:absolute; left:25px; font-size:24px; cursor:pointer;">←</span>
-        <h2 id="hGrahakName" style="margin:0;">Grahak Name</h2>
-        <p id="hGrahakPhone" style="margin:5px 0 0; opacity:0.8;">Number</p>
+<!-- 1. LOGIN SCREEN -->
+<div id="authSection">
+    <div style="width: 100%; max-width: 400px; text-align: center;">
+        <h1 style="color: var(--orange); font-size: 34px; font-weight:800; margin:0;">FastKhata ☁️</h1>
+        <p style="color: #64748b; margin-bottom: 30px;">Dukan ka hisab ab Cloud par safe hai.</p>
+        <input type="email" id="email" class="input-field" placeholder="Email Address">
+        <input type="password" id="pass" class="input-field" placeholder="Password (6+ Digit)">
+        <input type="text" id="shop" class="input-field" placeholder="Dukan ka Naam (e.g. Ansh Studio)">
+        <button id="authBtn" class="btn-main" onclick="handleAuth()">Login / Create Account</button>
+        <p id="errorMsg" style="color:red; font-size:12px; margin-top:10px;"></p>
     </div>
-    <div class="h-list" id="historyEntries"></div>
 </div>
 
-<!-- Transaction Entry Modal -->
+<!-- 2. HISTORY MODAL -->
+<div id="pModal" class="p-modal">
+    <div class="p-header">
+        <span onclick="closePro()" style="position:absolute; left:20px; font-size:26px; cursor:pointer;">←</span>
+        <h2 id="pTitle" style="margin:0;">Grahak Name</h2>
+        <p id="pSub" style="opacity:0.8; font-size:12px;">Mobile Number</p>
+    </div>
+    <div class="ledger">
+        <h4 style="color:var(--orange); border-bottom:1px solid #f1f5f9; padding-bottom:10px;">Transaction History</h4>
+        <div id="pLedgerList"></div>
+    </div>
+</div>
+
+<!-- 3. TXN INPUT MODAL -->
 <div id="txnModal" class="modal-overlay">
     <div class="modal-content">
-        <h3 id="txnTitle" style="color:var(--orange-deep); margin-top:0;">Kitna Amount?</h3>
-        <input type="number" id="txnAmount" class="input-field" style="font-size:24px; text-align:center; height:60px; font-weight:800;" placeholder="₹ 0">
-        <input type="text" id="txnNote" class="input-field" placeholder="Kharidi detail (e.g. Jeans)">
+        <h3 id="txnTitle" style="color:var(--deep); margin-top:0;">Kitna Amount?</h3>
+        <input type="number" id="txnAmt" class="input-field" style="font-size:26px; text-align:center; font-weight:800;" placeholder="₹ 0">
+        <input type="text" id="txnNote" class="input-field" placeholder="Note (e.g. Jeans, Shirt)">
         <div style="display:flex; gap:12px;">
-            <button onclick="closeTxnModal()" style="flex:1; padding:14px; border:none; background:#f1f5f9; border-radius:12px; font-weight:600;">Cancel</button>
-            <button id="txnConfirm" style="flex:1; padding:14px; background:var(--orange-main); color:white; border-radius:12px; font-weight:600;">Save</button>
+            <button onclick="closeTxn()" style="flex:1; border:none; padding:12px; background:#f1f5f9; border-radius:12px; font-weight:bold;">Cancel</button>
+            <button id="txnSaveBtn" style="flex:1; border:none; padding:12px; background:var(--orange); color:white; border-radius:12px; font-weight:bold;">Save</button>
         </div>
     </div>
 </div>
 
-<div class="top-section">
-    <h1>India No. 1 Digital Khata App</h1>
-</div>
-
-<div class="total-card">
-    <div style="text-align:center;"><span>KUL BAKI</span><div class="red" id="totalBaki">₹0</div></div>
-    <div style="text-align:center;"><span>KUL JAMA</span><div class="green" id="totalJama">₹0</div></div>
-</div>
-
-<div class="container">
-    <input type="text" id="search" class="search-box" placeholder="🔍 Grahak ka naam dhoondhe..." oninput="render()">
-
-    <div class="card" style="border: 2px dashed #fdba74; background: #fffaf5; text-align: center;">
-        <input type="text" id="nName" class="input-field" placeholder="Grahak ka Poora Naam">
-        <input type="number" id="nPhone" class="input-field" placeholder="WhatsApp Number">
-        <button onclick="addGrahak()" style="width:100%; background:var(--orange-main); color:white; border:none; padding:15px; border-radius:15px; font-weight:600; font-size:16px;">+ Save Naya Grahak</button>
+<!-- 4. MAIN APP DASHBOARD -->
+<div id="mainApp" style="display:none;">
+    <div class="header">
+        <h1 id="shopDisp" style="margin:0; font-weight:800;">Aditya Jeans</h1>
+        <p id="emailDisp" style="opacity:0.8; font-size:12px;">user@email.com</p>
+        <button onclick="auth.signOut()" style="background:rgba(255,255,255,0.2); border:none; color:white; padding:5px 15px; border-radius:50px; font-size:10px; margin-top:10px; cursor:pointer;">Logout</button>
     </div>
 
-    <div id="grahakList"></div>
+    <div class="total-card">
+        <div style="text-align:center;"><small style="color:#94a3b8; font-weight:600;">KUL BAKI</small><div class="red" id="totalBaki">₹0</div></div>
+        <div style="text-align:center;"><small style="color:#94a3b8; font-weight:600;">KUL JAMA</small><div class="green" id="totalJama">₹0</div></div>
+    </div>
+
+    <div class="container" style="max-width:500px; margin:auto;">
+        <input type="text" id="search" class="input-field" style="border-radius:50px; margin-bottom:20px;" placeholder="🔍 Grahak dhundein..." oninput="render()">
+        
+        <div class="card" style="border: 2px dashed #fdba74; background: #fffaf5;">
+            <input type="text" id="nName" class="input-field" placeholder="Grahak ka Naam">
+            <input type="number" id="nPhone" class="input-field" placeholder="WhatsApp Number">
+            <button onclick="addGrahak()" class="btn-main">+ Save Naya Grahak</button>
+        </div>
+        <div id="gList"></div>
+    </div>
 </div>
 
 <script>
-    let data = JSON.parse(localStorage.getItem('fastKhata_final_v10')) || [];
+    // ======= VERIFIED CONFIG =======
+    const firebaseConfig = {
+        apiKey: "AIzaSyBnlwzIARphzkecLvEYBlMu0PmNsYZPELE",
+        authDomain: "fastkhata-c42c3.firebaseapp.com",
+        projectId: "fastkhata-c42c3",
+        storageBucket: "fastkhata-c42c3.firebasestorage.app",
+        messagingSenderId: "242922200569",
+        appId: "1:242922200569:web:ea3734beb9c0c3960b7128"
+    };
 
-    function save() {
-        localStorage.setItem('fastKhata_final_v10', JSON.stringify(data));
-        render();
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let customers = [];
+    let curId = null, curType = '';
+
+    // Auth Change Monitor
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            document.getElementById('emailDisp').innerText = user.email;
+            syncData(user.uid);
+        } else {
+            document.getElementById('authSection').style.display = 'flex';
+            document.getElementById('mainApp').style.display = 'none';
+        }
+    });
+
+    // Login/Signup Unified Logic
+    async function handleAuth() {
+        const e = document.getElementById('email').value.trim();
+        const p = document.getElementById('pass').value.trim();
+        const s = document.getElementById('shop').value.trim();
+        const btn = document.getElementById('authBtn');
+        if(!e || !p) return alert("Email/Pass bharein");
+
+        btn.disabled = true; btn.innerText = "Processing...";
+
+        try {
+            await auth.signInWithEmailAndPassword(e, p);
+        } catch (err) {
+            // If user not found or invalid credentials, try making a new account
+            try {
+                const res = await auth.createUserWithEmailAndPassword(e, p);
+                await db.collection('users').doc(res.user.uid).set({ shopName: s || "Ansh Studio" });
+            } catch (signupErr) { 
+                alert("Error: " + signupErr.message);
+                document.getElementById('errorMsg').innerText = signupErr.message;
+            }
+        }
+        btn.disabled = false; btn.innerText = "Login / Create Account";
     }
 
-    function addGrahak() {
+    function syncData(uid) {
+        db.collection('users').doc(uid).onSnapshot(doc => {
+            if(doc.exists) document.getElementById('shopDisp').innerText = doc.data().shopName;
+        });
+        db.collection('users').doc(uid).collection('customers').onSnapshot(snap => {
+            customers = snap.docs.map(d => ({id: d.id, ...d.data()}));
+            render();
+        });
+    }
+
+    async function addGrahak() {
         const name = document.getElementById('nName').value.trim();
         const phone = document.getElementById('nPhone').value.trim();
         if(!name) return alert("Naam bharein!");
-        data.push({ id: Date.now(), name, phone, balance: 0, history: [] });
-        document.getElementById('nName').value = '';
-        document.getElementById('nPhone').value = '';
-        save();
+        await db.collection('users').doc(auth.currentUser.uid).collection('customers').add({ name, phone, balance: 0, history: [] });
+        document.getElementById('nName').value = ''; document.getElementById('nPhone').value = '';
     }
 
-    let activeId = null, activeType = '';
     function openTxn(id, type) {
-        activeId = id; activeType = type;
-        document.getElementById('txnTitle').innerText = type === 'baki' ? 'Kitna BAKI?' : 'Kitna JAMA?';
-        document.getElementById('txnAmount').value = '';
+        curId = id; curType = type;
+        document.getElementById('txnTitle').innerText = type==='baki'?'Kitna BAKI?':'Kitna JAMA?';
+        document.getElementById('txnAmt').value = '';
         document.getElementById('txnNote').value = '';
         document.getElementById('txnModal').style.display = 'flex';
     }
-    function closeTxnModal() { document.getElementById('txnModal').style.display = 'none'; }
+    function closeTxn() { document.getElementById('txnModal').style.display = 'none'; }
 
-    document.getElementById('txnConfirm').onclick = function() {
-        const amt = parseFloat(document.getElementById('txnAmount').value);
+    document.getElementById('txnSaveBtn').onclick = async function() {
+        const amt = parseFloat(document.getElementById('txnAmt').value);
         const note = document.getElementById('txnNote').value.trim();
         if(!amt) return;
-        const g = data.find(x => x.id === activeId);
+        const c = customers.find(x => x.id === curId);
+        let newBal = c.balance + (curType === 'baki' ? amt : -amt);
         const date = new Date().toLocaleString('hi-IN', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'});
-        if(activeType === 'baki') {
-            g.balance += amt;
-            g.history.unshift({type: 'BAKI', amt, date, note});
-        } else {
-            g.balance -= amt;
-            g.history.unshift({type: 'JAMA', amt, date, note});
-        }
-        closeTxnModal(); save();
+        const newHist = [{type: curType.toUpperCase(), amt, date, note}, ...c.history];
+        await db.collection('users').doc(auth.currentUser.uid).collection('customers').doc(curId).update({ balance: newBal, history: newHist });
+        closeTxn();
     }
 
-    function openHistory(id) {
-        const g = data.find(x => x.id === id);
-        document.getElementById('hGrahakName').innerText = g.name;
-        document.getElementById('hGrahakPhone').innerText = "📞 +91 " + g.phone;
-        document.getElementById('historyEntries').innerHTML = g.history.map(h => `
-            <div style="padding:15px 0; border-bottom:1px solid #f1f5f9;">
-                <div style="display:flex; justify-content:space-between; font-weight:600;">
-                    <span style="color:#94a3b8; font-size:11px;">${h.date}</span>
+    function openPro(id) {
+        const c = customers.find(x => x.id === id);
+        document.getElementById('pTitle').innerText = c.name;
+        document.getElementById('pSub').innerText = "📞 +91 " + c.phone;
+        document.getElementById('pLedgerList').innerHTML = c.history.map(h => `
+            <div style="border-bottom:1px solid #f1f5f9; padding:12px 0;">
+                <div style="display:flex; justify-content:space-between; font-weight:800;">
+                    <small style="color:#94a3b8; font-weight:400;">${h.date}</small>
                     <span class="${h.type==='BAKI'?'red':'green'}">${h.type}: ₹${h.amt}</span>
                 </div>
-                ${h.note ? `<div style="font-size:13px; color:#475569; margin-top:5px;">📄 ${h.note}</div>` : ''}
+                ${h.note ? `<div style="font-size:13px; color:#431407; margin-top:5px; font-weight:500;">📄 Detail: ${h.note}</div>` : ''}
             </div>
-        `).join('') || "<p style='text-align:center; padding:20px;'>No entry.</p>";
-        document.getElementById('historyModal').style.display = 'flex';
+        `).join('') || "<p style='text-align:center; color:#ccc;'>No entries.</p>";
+        document.getElementById('pModal').style.display = 'flex';
     }
-    function closeHistory() { document.getElementById('historyModal').style.display = 'none'; }
+    function closePro() { document.getElementById('pModal').style.display = 'none'; }
 
     function render() {
-        const list = document.getElementById('grahakList');
-        const search = document.getElementById('search').value.toLowerCase();
+        const list = document.getElementById('gList');
+        const q = document.getElementById('search').value.toLowerCase();
         list.innerHTML = "";
-        
-        let kulBakiGlobal = 0;
-        let kulJamaGlobal = 0;
+        let kb = 0, kj = 0;
 
-        data.forEach(g => {
-            // Calculate Global Totals
-            if(g.balance > 0) kulBakiGlobal += g.balance;
+        customers.forEach(g => {
+            if(g.balance > 0) kb += g.balance;
+            g.history.forEach(h => { if(h.type === 'JAMA') kj += h.amt; });
+            if(!g.name.toLowerCase().includes(q)) return;
             
-            // Loop through all history to find TOTAL money received (JAMA)
-            g.history.forEach(h => {
-                if(h.type === 'JAMA') kulJamaGlobal += h.amt;
-            });
-
-            if(!g.name.toLowerCase().includes(search)) return;
-
-            let indJ = 0; g.history.forEach(h => { if(h.type==='JAMA') indJ += h.amt; });
-
             const div = document.createElement('div');
             div.className = "card";
             div.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                    <div>
-                        <div class="cust-name" onclick="openHistory(${g.id})">${g.name} 📋</div>
-                        <div style="font-size:13px; color:#94a3b8; margin-top:4px;">+91 ${g.phone}</div>
-                        <div style="font-size:11px; color:#94a3b8; font-style:italic;">Last: ${g.history.length > 0 ? g.history[0].type : 'N/A'}</div>
-                    </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div onclick="openPro('${g.id}')" class="clickable-name">${g.name}</div>
                     <div style="text-align:right;">
-                        <div class="bal-amt red">₹${Math.abs(g.balance)}</div>
-                        <span class="jama-tag">Jama: ₹${indJ}</span>
+                        <div class="red" style="font-size:22px; font-weight:900;">₹${Math.abs(g.balance)}</div>
+                        <span class="jama-badge">Jama: ₹${g.history.filter(h=>h.type==='JAMA').reduce((s,h)=>s+h.amt,0)}</span>
                     </div>
                 </div>
                 <div class="btn-group">
-                    <button class="btn btn-baki" onclick="openTxn(${g.id}, 'baki')">− BAKI</button>
-                    <button class="btn btn-jama" onclick="openTxn(${g.id}, 'jama')">+ JAMA</button>
+                    <button class="mini-btn" style="background:#fff1f2; color:var(--red);" onclick="openTxn('${g.id}','baki')">− BAKI</button>
+                    <button class="mini-btn" style="background:#f0fdf4; color:var(--green);" onclick="openTxn('${g.id}','jama')">+ JAMA</button>
                 </div>
-                <button class="btn-wa" onclick="window.open('https://wa.me/91${g.phone}?text=Namaste, balance ₹${Math.abs(g.balance)} BAKI hai.')">
-                    📱 WhatsApp Update
-                </button>
-                <div style="text-align:right; margin-top:15px;">
-                    <span onclick="if(confirm('Delete?')){data=data.filter(x=>x.id!==${g.id});save();}" style="color:#cbd5e1; font-size:10px; cursor:pointer;">🗑️ DELETE</span>
+                <button class="btn-main" style="background:#22c55e; box-shadow:none; padding:12px; font-size:14px;" onclick="window.open('https://wa.me/91${g.phone}?text=Namaste ${g.name}, Aapka balance ₹${Math.abs(g.balance)} BAKI hai.')">WhatsApp Reminder</button>
+                <div style="text-align:right; margin-top:10px;">
+                    <small onclick="if(confirm('Delete?')) db.collection('users').doc(auth.currentUser.uid).collection('customers').doc('${g.id}').delete()" style="color:#ccc; cursor:pointer;">Delete</small>
                 </div>
             `;
             list.appendChild(div);
         });
-
-        document.getElementById('totalBaki').innerText = "₹" + kulBakiGlobal;
-        document.getElementById('totalJama').innerText = "₹" + kulJamaGlobal;
+        document.getElementById('totalBaki').innerText = "₹" + kb;
+        document.getElementById('totalJama').innerText = "₹" + kj;
     }
-
-    render();
 </script>
 </body>
 </html>
